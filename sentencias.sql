@@ -22,5 +22,6 @@ create table autores(
     genero char(1),
     fecha_nacimiento date,
     pais_origen varchar(40)
+
     
 );

@@ -23,5 +23,12 @@ create table autores(
     fecha_nacimiento date,
     pais_origen varchar(40)
 
-    
+
 );
+
+insert into autores (autor_id,nombre,apellido,genero,fecha_nacimiento,pais_origen)
+values (1,'Test autor','Test autor','M','2018-01-30','México');
+insert into autores (autor_id,nombre)
+values (1,'Test autor');
+
+insert into autores

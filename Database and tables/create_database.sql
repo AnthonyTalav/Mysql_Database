@@ -7,3 +7,4 @@ show databases;
 --Elimnar una base de datos
 
 drop database libreria;
+

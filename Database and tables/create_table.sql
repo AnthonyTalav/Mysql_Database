@@ -20,3 +20,4 @@ show columns from autores;
 describe autores;
 desc autores;
 
+

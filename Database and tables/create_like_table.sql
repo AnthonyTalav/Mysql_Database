@@ -9,3 +9,4 @@ create table autores(
 
 --Para crear una tabla de otra y ésta solo copiará los campos más no registros
 create usuarios like autores;
+

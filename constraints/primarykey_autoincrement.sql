@@ -32,3 +32,6 @@ create table if not exists autores(
     fecha_creacion datetime default current_timestamp,
     primary key (autor_id)
 );
++
+
+

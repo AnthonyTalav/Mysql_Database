@@ -21,4 +21,4 @@ SELECT LEFT ("Esto es una cadena de texto",5) AS "Substring izquierdo",
        RIGHT ("Esto es una cadena de texto",10) AS "Substring derecho";
 
  SELECT * FROM libros WHERE LEFT(titulo,12) = "Harry Potter";
- SELECT * FROM libros WHERE RIGHT(titulo,6) = "Anillo";
+ SELECT * FROM libros WHERE RIGHT(titulo,6) = "Anillo";   

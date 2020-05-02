@@ -1,30 +1,39 @@
 
-drop database if exists libreria_cf;
+DROP DATABASE IF EXISTS libreria_cf;
 
-create database if not exists libreria_cf;
+CREATE DATABASE IF NOT EXISTS libreria_cf;
 
-use libreria_cf;
+USE libreria_cf;
 
-create table if not exists autores(
-    autor_id int unsigned primary key auto_increment,
-    nombre varchar(25) not null,
-    apellido varchar(25) not null,
-    seudonimo varchar(50) unique,
-    genero enum('M','F'),
-    fecha_nacimiento date not null,
-    pais_origen varchar(40) not null,
-    fecha_creacion datetime default current_timestamp
+CREATE TABLE IF NOT EXISTS autores(
+    autor_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(25) NOT NULL,
+    apellido VARCHAR(25) NOT NULL,
+    seudonimo VARCHAR(50) UNIQUE,
+    genero ENUM('M','F'),
+    fecha_nacimiento DATE NOT NULL,
+    pais_origen VARCHAR(40) NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-create table if not exists libros(
-    libro_id integer unsigned primary key auto_increment,
-    autor_id int unsigned not null,
-    titulo varchar(50) not null,
-    descripcion varchar(50),
-    paginas integer unsigned,
-    fecha_publicacion date not null,
-    fecha_creacion datetime default current_timestamp,
-    foreign key(autor_id) references autores(autor_id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS libros(
+    libro_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    autor_id INTEGER UNSIGNED NOT NULL,
+    titulo VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(50),
+    paginas INTEGER UNSIGNED,
+    fecha_publicacion DATE NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(autor_id) REFERENCES autores(autor_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS usuarios(
+    usuario_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(25) NOT NULL,
+    apellidos VARCHAR(25) NOT NULL,
+    username VARCHAR(25) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE libros ADD ventas INT UNSIGNED NOT NULL DEFAULT 0;
@@ -40,6 +49,8 @@ INSERT INTO autores (nombre, apellido, seudonimo, fecha_nacimiento, genero, pais
          ('Miguel', 'de Unamuno', NULL, '1892-01-03', 'M', 'USA'),
          ('Arturo', 'Perez Reverte', NULL, '1951-11-25', 'M', 'Espania'),
          ('George Raymond', 'Richard Martin', NULL, '1948-09-20', 'M', 'USA');
+
+
 
 INSERT INTO libros(autor_id, titulo, fecha_publicacion)
 VALUES (1, 'Carrie','1974-01-01'),
@@ -105,5 +116,33 @@ VALUES (1, 'Carrie','1974-01-01'),
       (8, 'Festin de cuervos','2011-07-12'),
       (8, 'Danza de dragones','2011-07-12');
 
-select*from autores;
-select*from libros;
+INSERT INTO usuarios (nombre, apellidos, username, email)
+VALUES  ('Eduardo', 'Garcia', 'eduardogpg', 'eduardo@codigofacilito.com'),
+        ('Codi1', 'Facilito', 'codigofacilito', 'ayuda@codigofacilito.com'),
+        ('Codi2', 'Facilito', 'codigofacilito', 'ayuda@codigofacilito.com'),
+        ('Codi3', 'Facilito', 'codigofacilito', 'ayuda@codigofacilito.com');
+
+DELIMITER //
+
+CREATE FUNCTION obtener_paginas()
+RETURNS INT
+BEGIN
+   SET @paginas = (SELECT (ROUND( RAND() * 100 ) * 4 ));
+   RETURN @paginas;
+END//
+
+CREATE FUNCTION obtener_ventas()
+RETURNS INT
+BEGIN
+   SET @paginas = (SELECT (ROUND( RAND() * 100 ) * 6 ));
+   RETURN @paginas;
+END//
+
+ DELIMITER ;
+
+UPDATE libros SET paginas = obtener_paginas();
+UPDATE libros SET ventas = obtener_ventas();
+
+SELECT * FROM autores;
+SELECT * FROM libros;
+SELECT * FROM usuarios;

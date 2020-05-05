@@ -36,6 +36,14 @@ CREATE TABLE IF NOT EXISTS usuarios(
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS libro_usuarios(
+    libro_id INT UNSIGNED NOT NULL,
+    usuario_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY(libro_id) REFERENCES libros(libro_id),
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 ALTER TABLE libros ADD ventas INT UNSIGNED NOT NULL DEFAULT 0;
 ALTER TABLE libros ADD stock INT UNSIGNED NOT NULL DEFAULT 10;
 
@@ -122,6 +130,10 @@ VALUES  ('Eduardo', 'Garcia', 'eduardogpg', 'eduardo@codigofacilito.com'),
         ('Codi2', 'Facilito', 'codigofacilito', 'ayuda@codigofacilito.com'),
         ('Codi3', 'Facilito', 'codigofacilito', 'ayuda@codigofacilito.com');
 
+INSERT INTO libro_usuarios (libro_id, usuario_id)
+VALUES  (1,1),(2,1),(3,1),
+        (10,3),(20,3),(30,3);
+
 DELIMITER //
 
 CREATE FUNCTION obtener_paginas()
@@ -146,3 +158,4 @@ UPDATE libros SET ventas = obtener_ventas();
 SELECT * FROM autores;
 SELECT * FROM libros;
 SELECT * FROM usuarios;
+SELECT * FROM libro_usuarios;
